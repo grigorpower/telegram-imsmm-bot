@@ -37,7 +37,7 @@ func main() {
 	// Инициализация сервисов
 	sendErrorService := usecases.NewSendErrorService(telegramAdapter)
 
-	go logprocessor.ErrorDetection(cfgAPI).Run()
+	go logprocessor.ErrorDetection(cfgAPI, sendErrorService)
 
 	// Бесконечный цикл для работы программы
 	select {}

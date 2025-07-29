@@ -1,7 +1,6 @@
 package logprocessor
 
 import (
-	"log"
 	"os"
 	"strings"
 	"sync"
@@ -16,20 +15,14 @@ type LogProcessor struct {
 	confTgBot *config.TelegramConfig
 }
 
-func (s *SendErrorService) ErrorDetection(c *cfgAPI) {
+func ErrorDetection(c *config.APIConfig, s *usecases.SendErrorService) {
 	var lastOffset int64 = 0
 	var currentLine string
 	var mu sync.Mutex // создаем мьютекс
 
 	for {
-		//Загружаем конфигурацию
-		conf, err := config.LoadAPIConfig()
-		if err != nil {
-			log.Println("Ошибка загрузки config: ", err)
-		}
-
 		// Открываем файл
-		f := file.Open(conf.LogFilePath, conf.TimeInterval)
+		f := file.Open(c.LogFilePath, c.TimeInterval)
 
 		// Захватываем мьютекс перед началом сканирования на 'New version started'
 		mu.Lock()
@@ -37,7 +30,7 @@ func (s *SendErrorService) ErrorDetection(c *cfgAPI) {
 		// Первый цикл: сканируем на наличие 'New version started'
 		var contain bool
 		startLine := ""
-		startLine, contain = file.Search(f, []string{conf.StartKeyWord}, contain)
+		startLine, contain = file.Search(f, []string{c.StartKeyWord}, contain)
 
 		// Освобождаем мьютекс после завершения поиска 'New version started'
 		mu.Unlock()
@@ -46,25 +39,25 @@ func (s *SendErrorService) ErrorDetection(c *cfgAPI) {
 		if startLine != currentLine {
 			currentLine = startLine
 			lastOffset = 0
-			time.Sleep(conf.TimeInterval)
+			time.Sleep(c.TimeInterval)
 		}
 
-		f = file.Open(conf.LogFilePath, conf.TimeInterval)
+		f = file.Open(c.LogFilePath, c.TimeInterval)
 		f.Seek(lastOffset, os.SEEK_SET)
 
 		mu.Lock()
 		var errLine string
-		errLine, contain = file.Search(f, conf.ErrorIndicators, contain)
+		errLine, contain = file.Search(f, c.ErrorIndicators, contain)
 
 		if contain {
-			errLine = strings.TrimPrefix(errLine, conf.Prefix)
-			usecases.SendErrorService(errLine)
+			errLine = strings.TrimPrefix(errLine, c.Prefix)
+			s.SendError(nil, errLine)
 		}
 
 		offset, _ := f.Seek(0, os.SEEK_CUR)
 		lastOffset = offset
 		f.Close()
 		mu.Unlock()
-		time.Sleep(conf.TimeInterval)
+		time.Sleep(c.TimeInterval)
 	}
 }

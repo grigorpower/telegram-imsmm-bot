@@ -21,7 +21,7 @@ func NewSendErrorService(telegram interfaces.TelegramSender) *SendErrorService {
 
 // SendError отправляет сообщение об ошибке в телеграм
 // Форматирует текст ошибки
-func (s *SendErrorService) SendError(ctx context.Context, errMsg string, prefix string) error {
+func (s *SendErrorService) SendError(ctx context.Context, errMsg string) error {
 	err := s.telegram.SendMessage(ctx, errMsg)
 	if err != nil {
 		return fmt.Errorf("Не удалось отправить сообщение: %w", err)
