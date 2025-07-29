@@ -1,0 +1,47 @@
+    Starting sequence Wed Jul 23 15:40:40 2025
+     
+  Instrument Name: ET1
+    Sequence File: C:\msdchem\1\sequence\MSMM.s
+          Comment:  
+         Operator:  
+        Data Path: C:\MSDCHEM\1\DATA\MSMM\
+      Method Path: C:\MSDCHEM\1\METHODS\
+
+    Line Type        Vial  DataFile  Method    Sample Name
+    -----------------------------------------------------------------------
+      1) Sample         1  000021321909
+          Datafile         000021321909
+          Method           MSMM_EVR-2
+      2) Sample         2  000021321913
+          Datafile         000021321913
+          Method           MSMM_EVR-2
+      3) Sample         3  000021321933
+          Datafile         000021321933
+          Method           MSMM_EVR-2
+      4) Sample         4  000021321936
+          Datafile         000021321936
+          Method           MSMM_EVR-2
+      5) Sample         5  000021320640
+          Datafile         000021320640
+          Method           MSMM_EVR-2
+      6) Sample         6  000021320617
+          Datafile         000021320617
+          Method           MSMM_EVR-2
+      7) Sample         7  000021320569
+          Datafile         000021320569
+          Method           MSMM_EVR-2
+      8) Sample         8  000021326309
+          Datafile         000021326309
+          Method           MSMM_EVR-2
+      9) Sample         9  000021326331
+          Datafile         000021326331
+          Method           MSMM_EVR-2
+     10) Sample        10  000021326355
+          Datafile         000021326355
+          Method           MSMM_EVR-2
+     11) Sample        11  000021326357
+          Datafile         000021326357
+          Method           MSMM_EVR-2
+     12) Sample        12  000021326255
+          Datafile         000021326255
+          Method           MSMM_EVR-2
